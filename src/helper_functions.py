@@ -53,3 +53,7 @@ def df_plot(df, plot_name=False):
     
     path = os.path.join(gparent,'figures',f'{plot_name}.png')
     dfi.export(df,f'{path}', max_rows=-1)
+    
+def get_expirations(symbol : str):
+    stock = yf.Ticker(symbol)
+    return stock.options
