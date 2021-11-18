@@ -14,7 +14,7 @@ import time
 gparent = os.path.join(os.pardir)
 sys.path.append(gparent)
 
-def prices(symbol: str):
+def get_prices(symbol: str):
     "Retuns a data frame of stock price information."
     
     # creating empty stock info dictionary
