@@ -57,3 +57,20 @@ def df_plot(df, plot_name=False):
 def get_expirations(symbol : str):
     stock = yf.Ticker(symbol)
     return stock.options
+
+def options_mrkt(symbol : str, expiration : str, option : str):
+    stock = yf.Ticker(symbol)
+    current_price = stock.info['currentPrice']
+    dividend = stock.info['dividendRate']
+    url = ('https://www.treasury.gov/resource-center/'
+    'data-chart-center/interest-rates/Pages/TextView.aspx?data=yield')
+    rates = pd.read_html(url)
+    risk_free_rate = rates[1]['3 mo']
+    print(f"Current Price: ${current_price}")
+    print(f"Dividend: ${dividend}")
+    print(f"3 Month TBill Rate: {risk_free_rate.to_string().split()[1]}%")
+    opt = stock.option_chain(expiration)
+    if option == 'calls':
+        return opt.calls.sort_values(by='strike')
+    elif option == 'puts':
+        return opt.puts.sort_values(by='strike')
